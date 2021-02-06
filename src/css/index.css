@@ -1,2 +1,5 @@
+@import "./global.css";
+@import "./vars.css";
+@import "./effects.css";
 @import "./ui.css";
 @import "./container.css";

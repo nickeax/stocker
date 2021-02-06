@@ -1,27 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./src/css/index.css">
-  <script src="./src/js/index.js" type="module" defer></script>
-  <title></title>
-</head>
-<body>
-  <div class="container">
-    <form>
-      <fieldset form="addItems">
-        <legend>Add Items</legend>
-        <input type="text" placeholder="Item Description"><br>
-        <input type="text" placeholder="Item Description">
-      </fieldset>
-      <fieldset>
-        <legend>Edit Items</legend>
-      </fieldset>
-      <fieldset>
-        <legend>Reports</legend>
-      </fieldset>
-    </form>
-  </div>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/css/index.css" />
+    <script src="./src/js/index.js" type="module" defer></script>
+    <title></title>
+  </head>
+  <body>
+    <div id="ui">
+      <div class="operationsNav">
+        <ul>
+          <li><button data-target="accounts" id="btnAccounts">ACCOUNTS</button></li>
+        </ul>
+        <ul>
+          <li><button data-target="sales" id="btnSales">SALES</button></li>
+        </ul>
+        <ul>
+          <li><button data-target="edit" id="btnItems">ITEMS</button></li>
+        </ul>
+        <ul>
+          <li><button data-target="reports" id="btnReports">REPORTS</button></li>
+        </ul>
+        <input type="text">
+      </div>
+      <div class="container">
+        <form>
+          <fieldset id="accounts">
+            <legend>Accounts</legend>
+            <ul class="flex-outer">
+              <li>
+                <label for="fName">First Name
+                  <input id="fName "type="text" placeholder="first name" />
+                </label><br>
+              </li>
+              <li>
+                <label for="lName">Last Name
+                  <input id="lName "type="text" placeholder="last name" />
+                </label><br>
+              </li>
+              <li>
+
+                <label for="fName">Email
+                  <input id="email" type="email" placeholder="someone@somewhere.something" />
+                </label><br>
+              </li>
+              <li>
+                <label for="fName">Mobile
+                  <input id="mobile" type="text" placeholder="first name" />
+                </label><br>
+              </li>
+              <li>
+                <label for="fName">State/Territory
+                  <select id="state" type="text">
+                    <option value="act">ACT</option>
+                    <option value="act">NSW</option>
+                    <option value="act">SA</option>
+                    <option value="act">TAS</option>
+                    <option value="act">VIC</option>
+                    <option value="act">WA</option>
+                  </select>
+                </label><br>
+              </li>
+              <li>
+                <label for="fName">First Name
+                  <input id="fName "type="text" placeholder="first name" />
+                </label><br>
+              </li>
+              <label for="fName">First Name
+                <input id="fName "type="text" placeholder="first name" />
+              </label><br>
+              <label for="fName">First Name
+                <input id="fName "type="text" placeholder="first name" />
+              </label><br>
+              <input type="text" placeholder="Item Description" />
+            </ul>
+          </fieldset>
+          <fieldset id="sales">
+            <legend>Sales</legend>
+            <input type="text" placeholder="Item Description" />
+            <br />
+            <input type="text" placeholder="Item Description" />
+          </fieldset>
+          <fieldset id="edit">
+            <legend>Edit Items</legend>
+          </fieldset>
+          <fieldset id="reports">
+            <legend>Reports</legend>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </body>
 </html>

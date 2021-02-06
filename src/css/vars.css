@@ -1,0 +1,6 @@
+:root {
+  --primaryColour: rgb(0, 84, 180); 
+  --secondaryColour: rgb(214, 193, 0);
+  
+  --inputBackground: rgba(214, 193, 0, 0.106);
+}

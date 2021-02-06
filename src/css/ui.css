@@ -1,14 +1,43 @@
 fieldset {
   width: 90vw;
-  height: 20vh;
+  height: auto;
   margin: auto;
   margin-bottom: 6rem;
 }
 
+.flex-outer li,
+.flex-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.flex-outer > li > label,
+.flex-outer li p {
+  flex: 1 0 120px;
+  max-width: 220px;
+}
+ 
+.flex-outer > li > label + *,
+.flex-inner {
+  flex: 1 0 220px;
+}
+
+.flex-outer li button {
+  margin-left: auto;
+  padding: 8px 16px;
+  border: none;
+  background: #333;
+  color: #f2f2f2;
+  text-transform: uppercase;
+  letter-spacing: .09em;
+  border-radius: 2px;
+}
+
 legend {
-  background-color: #000;
-  color: #fff;
-  padding: 3px 6px;
+  background-color: var(--secondaryColour);
+  color: var(--primaryColour);
+  padding: 0.5rem 0.7rem;
 }
 
 .output {
@@ -17,4 +46,22 @@ legend {
 
 input {
   margin: .4rem;
+  width: 25rem;
+  background-color: var(--inputBackground);
+  color: var(--primaryColour);
+}
+
+.operationsNav {
+  padding: 1rem;
+  margin-bottom: 2rem;
+  background-color: var(--secondaryColour);
+}
+
+ul {
+  display: inline-block;
+}
+
+ul li {
+  color: var(--primaryColour);
+  list-style: none;
 }

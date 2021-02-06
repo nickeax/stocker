@@ -1,0 +1,7 @@
+*, *::before, *::after {
+  margin: 0;
+  box-sizing: border-box;
+  transition:  0.1s ease-in-out;
+
+  color: var(--primaryColour);
+}
