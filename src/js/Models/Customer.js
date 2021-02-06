@@ -7,7 +7,7 @@ export class Customer {
     this.mobile = obj.mobile
     this.state = obj.state
     this.city = obj.city
-    this.street = obj.street
+    this.address = obj.address
     this.number = obj.number
   }
 }
