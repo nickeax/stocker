@@ -10,6 +10,7 @@
   <body>
     <div id="ui">
       <div class="operationsNav">
+        <h2 style="display: inline-block; padding: 0.3rem; border: 1px dashed black;">STOCKER 1.0</h2>
         <ul>
           <li><button data-target="accounts" id="btnAccounts">ACCOUNTS</button></li>
         </ul>
@@ -22,16 +23,15 @@
         <ul>
           <li><button data-target="reports" id="btnReports">REPORTS</button></li>
         </ul>
-        <input type="text">
       </div>
       <div class="container">
-        <form>
+        <form id="main" action="#">
           <fieldset id="accounts">
-            <legend>Accounts</legend>
+            <legend>Account Management</legend>
             <ul class="flex-outer">
               <li>
                 <label for="fName">First Name
-                  <input id="fName "type="text" placeholder="first name" />
+                  <input id="fName "type="text" placeholder="first name" autocomplete="no"/>
                 </label><br>
               </li>
               <li>
@@ -40,7 +40,6 @@
                 </label><br>
               </li>
               <li>
-
                 <label for="fName">Email
                   <input id="email" type="email" placeholder="someone@somewhere.something" />
                 </label><br>
@@ -63,17 +62,23 @@
                 </label><br>
               </li>
               <li>
-                <label for="fName">First Name
-                  <input id="fName "type="text" placeholder="first name" />
+                <label for="fName">City
+                  <input id="city" type="text" placeholder="city" />
                 </label><br>
               </li>
-              <label for="fName">First Name
-                <input id="fName "type="text" placeholder="first name" />
-              </label><br>
-              <label for="fName">First Name
-                <input id="fName "type="text" placeholder="first name" />
-              </label><br>
-              <input type="text" placeholder="Item Description" />
+              <li>
+                <label for="fName">Street Address
+                  <input id="address" type="text" placeholder="street name" />
+                </label><br>
+              </li>
+              <li>
+                <label for="number">First Name
+                  <input id="number"type="text" placeholder="street and/or unit number" />
+                </label><br>
+              </li>
+              <div>
+                <button id="btnAccountsEnter" type="submit" class="ui-button">Add User</button>
+              </div>
             </ul>
           </fieldset>
           <fieldset id="sales">

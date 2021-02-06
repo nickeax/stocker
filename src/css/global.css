@@ -5,3 +5,11 @@
 
   color: var(--primaryColour);
 }
+
+body {
+  background-color: whitesmoke;
+}
+
+.container {
+  background-color: whitesmoke;
+}

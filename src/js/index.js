@@ -3,7 +3,7 @@ import { Utils } from './Utils/Utils.js'
 import { Customer } from "./Models/Customer.js"
 
 const ui = new UI(document.querySelector('#ui'))
-const defaultElement = document.querySelector('#sales')
+const defaultElement = document.querySelector('#accounts')
 const utils = new Utils()
 
 ui.Init(defaultElement)

@@ -3,6 +3,12 @@ export class UI {
   eventHandlers = {}
   fieldSets = null
   pages = []
+  accountsInputs = {
+    accounts: [],
+    sales: [],
+    items: [],
+    reports: []
+  }
 
   constructor(rootElement) {
     this._rootElement = rootElement
@@ -17,6 +23,10 @@ export class UI {
       this.AffectElement(x, "css", "hide", true)
     })
 
+    this.GetInputs("#accounts", "accounts")
+    this.GetInputs("#sales", "sales")
+    this.GetInputs("#sales", "sales")
+    this.GetInputs("#reports", "reports")
     this.GetPages(document.querySelectorAll("li"))
 
     this.AffectElement(def, "css", "show", true)
@@ -27,16 +37,21 @@ export class UI {
 
     this._rootElement.addEventListener('input', ev => {
       this.Process(ev)
+    }
+    )
+    this._rootElement.addEventListener('submit', ev => {
+      this.Process(ev)
     })
   }
 
   Process(ev) {
-    ev.preventDefault()
-    console.log(this.pages.indexOf(ev.target.id))
-    if(this.pages.indexOf(ev.target.id) === -1) return
+    if(this.pages.indexOf(ev.target.id) === -1 && ev.type !== 'submit') return
     
     switch (ev.type) {
-      case 'click':
+      case 'submit':
+        ev.preventDefault()
+        break;
+        case 'click':
         document.querySelectorAll('fieldset').forEach(x => this.AffectElement(x, 'css', 'hide', true))
 
         let tmpElement = document.getElementById(ev.target.dataset.target)
@@ -49,6 +64,13 @@ export class UI {
     }
   }
 
+  GetInputs(par, grp) {
+    let parentEl = document.querySelector(par)
+    let tmpEls = parentEl.querySelectorAll("input")
+    this.accountsInputs[grp].push(tmpEls)
+    console.log(this.accountsInputs)
+  }
+
   GetPages(els) {
     this.FindChildByType(els, 'button')
   }
@@ -59,7 +81,6 @@ export class UI {
         this.pages.push(x.children[0].id)
       }
     })
-    console.log(this.pages)
   }
 
   SetAttribute(elem, att, val) {
