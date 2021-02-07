@@ -117,3 +117,61 @@ ul {
 .container ul li input {
   border-bottom: 1px solid rgba(0, 0, 0, 0.274);
 }
+
+/* POPUP CLASSES */
+.opaque {
+  opacity: 1;
+
+}
+.clear {
+  opacity: 0;
+}
+
+.popupSuccess, .popupWarning, .popupError {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  z-index: 666;
+  width: 100vw;
+  height: 100vh;
+  font-size: 2rem;
+  font-weight: 900;
+  background-color: rgba(255, 255, 255, 0.0);
+  transition: opacity 2s ease-in-out;
+}
+
+.success, .warning, .error {
+  display: inline-block;
+  padding: 1rem;
+  background-color: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.101);
+}
+
+.success {
+  color: var(--popupSuccess);
+  border: 3px solid var(--popupSuccess);
+  border-radius: 20px;
+}
+
+.warning {
+  color: var(--popupWarning);
+  border: 3px solid var(--popupWarning);
+  border-radius: 20px;
+}
+
+.error {
+  color: var(--popupError);
+  border: 3px solid var(--popupError);
+  border-radius: 20px;
+}
+
+.popupTextBorder {
+  padding: 0;
+}
+
+/* ERROR MESSAGES */
+.fieldWarning::placeholder {
+  color: red;
+}

@@ -14,9 +14,6 @@ export class Utils {
       for(let j = 0; j < x.length; j++) {
         tmp += this.ALPHANUM[this.RandomRange(0, this.ALPHANUM.length)].toUpperCase()
       }
-      if(i < patternArr.length - 1) {
-        tmp += '-'
-      }
       tmpArr.push(tmp)
     })
     return tmpArr.join('-')

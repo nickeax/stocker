@@ -20,8 +20,8 @@ export class AddMember {
   }
 
   Validate() {
+    this.invalidList = []
     const me = this
-    let invalidList = ""
     this.required.forEach(x => {
       let fieldName = Object.keys(x)
       let fieldValue = me[fieldName]
@@ -42,17 +42,16 @@ export class AddMember {
           }
           break
         default:
+          console.log("Member info is valid.")
           break;
       }
     })
-    let tmp = this.invalidList
-    this.invalidList = []
 
-    return tmp
+    return this.invalidList
   }
 
   AddInvalid(str, msg) {
-    this.invalidList.push({field: `"${str}"`, message: `"${msg}"`})
+    this.invalidList.push({field: `${str}`, message: `${msg}`})
   }
 
   Reset() {

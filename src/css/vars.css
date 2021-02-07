@@ -5,4 +5,8 @@
   --inputBackground: rgba(210, 210, 210, 0.106);
 
   --ui-submit: rgb(0, 84, 180);
+
+  --popupSuccess: green;
+  --popupWarning: orange;
+  --popupError: red;
 }
