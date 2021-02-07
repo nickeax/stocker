@@ -25,7 +25,7 @@
         </ul>
       </div>
       <div class="container">
-        <form id="main" action="#">
+        <form id="account-form" action="#">
           <fieldset id="accounts">
             <legend>Account Management</legend>
             <ul class="flex-outer">
@@ -52,6 +52,7 @@
               <li>
                 <label for="state">State/Territory
                   <select id="state" type="text">
+                    <option value="" selected="selected">SELECT</option>
                     <option value="ACT">ACT</option>
                     <option value="NSW">NSW</option>
                     <option value="SA">SA</option>
@@ -77,7 +78,7 @@
                 </label><br>
               </li>
               <div>
-                <button id="btnAccountsEnter" type="submit" class="ui-button">Add User</button>
+                <button id="account-Add" type="submit" class="ui-button">Add User</button>
               </div>
             </ul>
           </fieldset>

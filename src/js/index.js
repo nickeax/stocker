@@ -1,23 +1,20 @@
 import { UI } from './Controllers/UI.js'
-import { Utils } from './Utils/Utils.js'
-import { Customer } from "./Models/Customer.js"
+import { Account } from './Controllers/Account.js'
+import { Order } from "./Controllers/Order.js"
+import { Stock } from "./Controllers/Stock.js";
 
-const ui = new UI(document.querySelector('#ui'))
+import { Utils } from './Utils/Utils.js'
+import { Member } from "./Models/Member.js"
+import { AddMember } from "./ViewModels/AddMember.js"
+
+const ui = new UI(document.querySelector('#ui'),
+  new AddMember(),
+  new Utils(),
+  new Account(new Utils()),
+  new Order(),
+  new Stock())
+
 const defaultElement = document.querySelector('#accounts')
 const utils = new Utils()
 
 ui.Init(defaultElement)
-
-let id = utils.GUID("xxx-xxxxx-xxxxx-xxx")
-
-let customer1 = new Customer({
-  id: id,
-  fName: "Nick",
-  lName: "Fletcher",
-  email: "nickeax@gmail.com",
-  mobile: "0418519027",
-  state: "VIC",
-  city: "Melbourne",
-  street: "Dobell Drive",
-  number: "Unit 12, 1"
-})

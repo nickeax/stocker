@@ -1,12 +1,10 @@
-import { Customer } from "../Models/Customer.js";
-import { AddMember } from "../ViewModels/AddMember.js";
 export class UI {
+  utils
   _rootElement = null
   eventHandlers = {}
-  accounts
+  _controllers = {}
   fieldSets = null
-  memberViewModel = new AddMember()
-
+  memberViewModel
   pages = []
   accountsInputs = {
     accounts: [],
@@ -15,9 +13,13 @@ export class UI {
     reports: []
   }
 
-  constructor(rootElement) {
+  constructor(rootElement, vm, ut, acc, stk, ord) {
+    this._controllers['account'] = acc
+    this._controllers['stock'] = stk
+    this._controllers['order'] = ord
     this._rootElement = rootElement
-
+    this.utils = ut
+    this.memberViewModel = vm
     this.eventHandlers.click = this.click
     this.eventHandlers.input = this.input
     this.accounts = []
@@ -58,11 +60,13 @@ export class UI {
     
     switch (ev.type) {
       case 'submit':
+        // Send ViewModel to Account controller for checking
+        // IF successful, clear fields of selected form and reset ViewModel
+        // ELSE highlight the entries that need amending and try again
         ev.preventDefault()
-        this.accounts.push(new Customer(this.memberViewModel))
+        this._controllers[this.GetController(ev.submitter.id)][this.GetAction(ev.submitter.id)](this.memberViewModel)
+        
         this.memberViewModel.Reset()
-        console.log(this.accounts)
-
         break;
 
         case 'click':
@@ -79,6 +83,14 @@ export class UI {
           this.memberViewModel[ev.target.id] = ev.target.value
           break;
     }
+  }
+
+  GetController(str) {
+    if(str) return str.split('-')[0]
+  }
+
+  GetAction(str) {
+    if(str) return str.split('-')[1]
   }
 
   GetInputs(par, grp) {
