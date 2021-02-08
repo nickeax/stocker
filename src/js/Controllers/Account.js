@@ -20,14 +20,17 @@ export class Account {
       let tmpId = this.utils.GUID("xxx-xxxx-xxxx")
       this.accounts.push(new Member(tmpId, mem))
       this.dal.AddMember(this.Get(tmpId))
-      this.dal.GetOrders()
     }
-    console.log(this.accounts)
     return memberValidity
   }
 
   Get(id) {
     return this.accounts.filter(x => x.ID == id)[0]
+  }
+
+  GetAll(mem) {
+    console.log("GetAll() mem:", mem)
+    return this.dal.GetItems(mem.controller)
   }
 
   ValidMember(m) {

@@ -11,12 +11,15 @@ export class AddMember {
     this.invalidList = []
     this.required = [{ fName: "text" },
     { lName: "text" },
-    { email: "email" },
-    { mobile: "number" },
-    { state: "text" },
-    { city: "text" },
-    { address: "text" },
-    { number: "number" }]
+    // { email: "email" },
+    // { mobile: "number" },
+    // { state: "text" },
+    // { city: "text" },
+    // { address: "text" },
+    // { number: "number" }
+  ]
+    this.controller = ""
+    this.action = ""
   }
 
   Validate() {

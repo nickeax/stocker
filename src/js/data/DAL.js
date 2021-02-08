@@ -1,8 +1,8 @@
 export class DAL {
   constructor() { 
-    this.accountsPrefix = "stocker-acc"
-    this.ordersPrefix = "stocker-ord"
-    this.stockPrefix = "stocker-stk"
+    this.accountsPrefix = "stocker-account"
+    this.ordersPrefix = "stocker-order"
+    this.stockPrefix = "stocker-stock"
   }
 
   // ACCOUNTS
@@ -12,20 +12,21 @@ export class DAL {
     localStorage.setItem(key, JSON.stringify(mem))
   }
 
-  // ORDERS
-  GetOrders() {
+  // ITEMS
+  GetItems(VM) {
+    console.log("VM: ", VM)
     let deseriObjects = []
     for(let i = 0; i < localStorage.length; i++) {
       let key = localStorage.key(i)
-      if(key.split('-').indexOf('acc') !== -1) {
+      if(key.split('-').indexOf(VM) !== -1) {
         deseriObjects.push(JSON.parse(localStorage.getItem(key)))
       }
     }
     return deseriObjects
   }
 
-  GetOrder(id) {
-    return this.GetOrders().filter(x => x.ID === id)
+  GetItem(id) {
+    return this.GetItems().filter(x => x.ID === id)
   }
 
   BuildKey(arr) {
