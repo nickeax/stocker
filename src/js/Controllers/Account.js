@@ -1,9 +1,6 @@
 import { Member } from "../Models/Member.js";
 
 export class Account {
-  accounts
-  utils
-
   constructor(ut, dal) {
     this.accounts = []
     this.utils = ut
@@ -16,8 +13,7 @@ export class Account {
     val = memberValidity.length
     
     if(!val) {
-      console.log(mem)
-      let tmpId = this.utils.GUID("xxx-xxxx-xxxx")
+      let tmpId = this.utils.GUID(utils.PATTERN)
       this.accounts.push(new Member(tmpId, mem))
       this.dal.AddMember(this.Get(tmpId))
     }
@@ -29,7 +25,6 @@ export class Account {
   }
 
   GetAll(mem) {
-    console.log("GetAll() mem:", mem)
     return this.dal.GetItems(mem.controller)
   }
 

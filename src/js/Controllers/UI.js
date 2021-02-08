@@ -3,26 +3,29 @@ export class UI {
   _rootElement = null
   eventHandlers = {}
   _controllers = {}
+  _viewModels = {}
   fieldSets = null
-  memberViewModel
+  _viewModel
   pages = []
-  accountsInputs = {
-    accounts: [],
-    sales: [],
-    items: [],
-    reports: []
+  uiInputs = {
+    account: [],
+    order: [],
+    stock: [],
+    report: []
   }
 
-  constructor(rootElement, vm, ut, acc, stk, ord) {
+  constructor(rootElement, addMember, addStock, ut, acc, stk, ord) {
+    this._rootElement = rootElement
+    this._viewModels['stock'] = addStock
+    this._viewModels['account'] = addMember
+    this.utils = ut
     this._controllers['account'] = acc
     this._controllers['stock'] = stk
     this._controllers['order'] = ord
-    this._rootElement = rootElement
-    this.utils = ut
-    this.memberViewModel = vm
+
+    this._viewModel = ""
     this.eventHandlers.click = this.click
     this.eventHandlers.input = this.input
-    this.accounts = []
   }
 
   Init(def) {
@@ -31,9 +34,10 @@ export class UI {
       this.AffectElement(x, "css", "hide", true)
     })
 
-    this.GetInputs("#accounts", "accounts")
-    this.GetInputs("#sales", "sales")
-    this.GetInputs("#reports", "reports")
+    this.GetInputs("#stock", "stock")
+    this.GetInputs("#account", "account")
+    this.GetInputs("#order", "order")
+    this.GetInputs("#report", "report")
     this.GetPages(document.querySelectorAll("li"))
 
     this.SetAttributesMulti("input", "autocomplete", "no")
@@ -56,14 +60,16 @@ export class UI {
 
   Process(ev) {
     if (this.pages.indexOf(ev.target.id) === -1 && ev.type !== 'submit' && ev.type !== 'input') return
+    this._viewModel = this._viewModels[this.GetController(ev.target.id)]
     switch (ev.type) {
       case 'submit':
-        this.memberViewModel.controller = this.GetController(ev.submitter.id)
-        this.memberViewModel.action = this.GetAction(ev.submitter.id)
+        this._viewModel = this._viewModels[this.GetController(ev.submitter.id)]
+        this._viewModel.controller = this.GetController(ev.submitter.id)
+        this._viewModel.action = this.GetAction(ev.submitter.id)
         ev.preventDefault()
-        let res = this._controllers[this.GetController(ev.submitter.id)][this.GetAction(ev.submitter.id)](this.memberViewModel)
+        let res = this._controllers[this.GetController(ev.submitter.id)][this.GetAction(ev.submitter.id)](this._viewModel)
 
-        switch (this.memberViewModel.action) {
+        switch (this._viewModel.action) {
           case "Add":
             if (res.length > 0) { // FAILED
               res.forEach(x => {
@@ -72,16 +78,17 @@ export class UI {
                 field.value = ""
                 field.placeholder = x.message
               })
+              console.log("UI Add case res = ", res)
               this.Popup('warning', "Please check that all fields contain the correct information")
 
             } else {
               // this.Popup('success', `Member ${this.memberViewModel.fName} was successfully added`)
-              this.memberViewModel.Reset()
+              this._viewModel.Reset()
               this.ClearForm(ev.target.id)
             }
             break;
-            case "GetAll":
-              console.log("GetAll() res:", res)
+          case "GetAll":
+            console.log("GetAll() res:", res)
           default:
             break;
         }
@@ -99,13 +106,22 @@ export class UI {
         break;
 
       case 'input':
-        this.memberViewModel[ev.target.id] = ev.target.value
+        this.GetViewModelFromInputEvent(ev)
+        console.log(ev, this._viewModel)
+        this._viewModel[ev.target.id] = ev.target.value
         break;
     }
   }
 
   GetController(str) {
     if (str) return str.split('-')[0]
+  }
+
+  GetViewModelFromInputEvent(e) {
+    e.path.forEach(x => {
+      let ind = Object.keys(this._viewModels).indexOf(x.id)
+      if(ind !== -1) this._viewModel = this._viewModels[x.id]
+    })
   }
 
   GetAction(str) {
@@ -115,7 +131,8 @@ export class UI {
   GetInputs(par, grp) {
     let parentEl = document.querySelector(par)
     let tmpEls = parentEl.querySelectorAll("input")
-    this.accountsInputs[grp].push(tmpEls)
+    this.uiInputs[grp].push(tmpEls)
+    this._viewModel = this._viewModels[grp]
   }
 
   GetPages(els) {
@@ -126,6 +143,7 @@ export class UI {
     const form = document.querySelector(`#${frm}`)
     form.querySelectorAll("input").forEach(x => {
       x.value = ""
+      x.placeholder = ""
       x.classList.remove("fieldWarning")
     })
   }

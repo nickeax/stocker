@@ -8,11 +8,17 @@ export class DAL {
   // ACCOUNTS
   AddMember(mem) {
     console.log(`Adding member ${mem.fName} ${mem.lName} with ID ${mem.ID} to Local Storage`)
-    let key = this.BuildKey([this.accountsPrefix, mem.ID])
+    let key = this.BuildKey([this.stockPrefix, mem.ID])
     localStorage.setItem(key, JSON.stringify(mem))
   }
-
+  
   // ITEMS
+  AddItem(itm) {
+    console.log(`Adding member ${itm.colour} ${itm.partNumber} with ID ${itm.ID} to Local Storage`)
+    let key = this.BuildKey([this.stockPrefix, itm.ID])
+    localStorage.setItem(key, JSON.stringify(itm))
+  }
+  
   GetItems(VM) {
     console.log("VM: ", VM)
     let deseriObjects = []
