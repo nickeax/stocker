@@ -1,14 +1,14 @@
 export class DAL {
   constructor() { 
-    this.accountsPrefix = "stocker-account"
-    this.ordersPrefix = "stocker-order"
+    this.accountPrefix = "stocker-account"
+    this.orderPrefix = "stocker-order"
     this.stockPrefix = "stocker-stock"
   }
 
   // ACCOUNTS
   AddMember(mem) {
     console.log(`Adding member ${mem.fName} ${mem.lName} with ID ${mem.ID} to Local Storage`)
-    let key = this.BuildKey([this.stockPrefix, mem.ID])
+    let key = this.BuildKey([this.accountPrefix, mem.ID])
     localStorage.setItem(key, JSON.stringify(mem))
   }
   

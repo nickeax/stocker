@@ -8,20 +8,20 @@ import { DAL } from "./data/DAL.js";
 import { Utils } from './Utils/Utils.js'
 import { AddMember } from "./ViewModels/AddMember.js"
 import { AddStock } from "./ViewModels/AddStock.js";
-import { Validate } from './data/Validate.js';
+import { VMM } from './ViewModels/ViewModelManager.js'
 
 const UTILS = new Utils()
-const VAL = new Validate()
+const viewModelManager = new VMM()
 const DL = new DAL()
 
 const ui = new UI(document.querySelector('#ui'),
-  new AddMember(VAL),
-  new AddStock(VAL),
+  new AddMember(viewModelManager),
+  new AddStock(viewModelManager),
   UTILS,
   new Account(UTILS, DL),
   new Stock(UTILS, DL),
   new Order(UTILS, DL))
 
-const defaultElement = document.querySelector('#account')
+const defaultElement = document.querySelector('#stock')
 
 ui.Init(defaultElement)

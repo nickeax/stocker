@@ -1,6 +1,6 @@
 export class AddMember {
-  constructor(val) {
-    this.val = val
+  constructor(man) {
+    this._manager = man
     this.fName = ""
     this.lName = ""
     this.email = ""
@@ -20,15 +20,12 @@ export class AddMember {
     this.controller = ""
     this.action = ""
   }
-  
+
   Validate() {
-    return this.val.Val(this.required, this)
+    return this._manager.Validate(this)
   }
 
   Reset() {
-    let me = this
-    Object.keys(this).forEach(x => {
-      if (x !== "required") me[x] = ""
-    })
+    this._manager.Reset(this)
   }
 }

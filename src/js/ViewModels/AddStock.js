@@ -1,6 +1,6 @@
 export class AddStock {
-  constructor(val) {
-    this.val = val // Validator object
+  constructor(man) {
+    this._manager = man // Validator object
     this.colour = ""
     this.partNumber = ""
     this.description = ""
@@ -14,13 +14,10 @@ export class AddStock {
   }
 
   Validate() {
-    return this.val.Val(this.required, this)
+    return this._manager.Validate(this)
   }
 
   Reset() {
-    let me = this
-    Object.keys(this).forEach(x => {
-      if (x !== "required") me[x] = ""
-    })
+    this._manager.Reset(this)
   }
 }

@@ -4,9 +4,12 @@ export class UI {
   eventHandlers = {}
   _controllers = {}
   _viewModels = {}
+  _exludeList = []
   fieldSets = null
   _viewModel
   pages = []
+  _eventTypes = ['click', 'input', 'submit', 'BuildList-order']
+  _customEvents = ['BuildList-order']
   uiInputs = {
     account: [],
     order: [],
@@ -19,6 +22,7 @@ export class UI {
     this._viewModels['stock'] = addStock
     this._viewModels['account'] = addMember
     this.utils = ut
+    this._exludeList = ['required', 'val', 'controller', 'action']
     this._controllers['account'] = acc
     this._controllers['stock'] = stk
     this._controllers['order'] = ord
@@ -26,6 +30,8 @@ export class UI {
     this._viewModel = ""
     this.eventHandlers.click = this.click
     this.eventHandlers.input = this.input
+
+    this.displayDataEvent = new Event('BuildList-order')
   }
 
   Init(def) {
@@ -45,28 +51,28 @@ export class UI {
 
     this.AffectElement(def, "css", "show", true)
 
-    this._rootElement.addEventListener('click', ev => {
-      this.Process(ev)
+    this._eventTypes.forEach(x => {
+      this._rootElement.addEventListener(x, ev => {
+        this.Process(ev)
+      })
     })
 
-    this._rootElement.addEventListener('input', ev => {
-      this.Process(ev)
-    }
-    )
-    this._rootElement.addEventListener('submit', ev => {
-      this.Process(ev)
-    })
   }
 
   Process(ev) {
-    if (this.pages.indexOf(ev.target.id) === -1 && ev.type !== 'submit' && ev.type !== 'input') return
-    this._viewModel = this._viewModels[this.GetController(ev.target.id)]
+    if (this.pages.indexOf(ev.target.id) === -1 &&
+      this._eventTypes.indexOf(ev.type) === -1 &&
+      this._customEvents.indexOf(ev.type) === -1)
+      return this._viewModel = this._viewModels[this.GetController(ev.target.id)]
+
+    // console.log("PST: ", ev)
+
     switch (ev.type) {
       case 'submit':
+        ev.preventDefault()
         this._viewModel = this._viewModels[this.GetController(ev.submitter.id)]
         this._viewModel.controller = this.GetController(ev.submitter.id)
         this._viewModel.action = this.GetAction(ev.submitter.id)
-        ev.preventDefault()
         let res = this._controllers[this.GetController(ev.submitter.id)][this.GetAction(ev.submitter.id)](this._viewModel)
 
         switch (this._viewModel.action) {
@@ -78,39 +84,53 @@ export class UI {
                 field.value = ""
                 field.placeholder = x.message
               })
-              console.log("UI Add case res = ", res)
               this.Popup('warning', "Please check that all fields contain the correct information")
 
             } else {
-              // this.Popup('success', `Member ${this.memberViewModel.fName} was successfully added`)
+              this.Popup('success', this.ResultMessage(this._viewModel) + " added.")
               this._viewModel.Reset()
               this.ClearForm(ev.target.id)
             }
             break;
           case "GetAll":
-            console.log("GetAll() res:", res)
+            console.table(res)
           default:
             break;
         }
 
         break;
 
-      case 'click':
-        document.querySelectorAll('fieldset').forEach(x => this.AffectElement(x, 'css', 'hide', true))
+      case 'click': // Check for click event that references a form/page title
+        if (this.pages.indexOf(ev.srcElement.id) !== -1) {
+          document.querySelectorAll('fieldset').forEach(x => this.AffectElement(x, 'css', 'hide', true))
 
-        let tmpElement = document.getElementById(ev.target.dataset.target)
+          let tmpElement = document.getElementById(ev.target.dataset.target)
 
-        if (ev.target.dataset.target) {
-          this.AffectElement(tmpElement, "css", "show", true)
+          if (ev.target.dataset.target) {
+            this.AffectElement(tmpElement, "css", "show", true)
+          }
+
         }
         break;
 
       case 'input':
         this.GetViewModelFromInputEvent(ev)
-        console.log(ev, this._viewModel)
         this._viewModel[ev.target.id] = ev.target.value
         break;
     }
+  }
+
+  ResultMessage(vm) {
+    let message = "Added "
+
+    let filtered = Object.keys(vm).filter(x => this._exludeList.indexOf(x) === -1)
+    console.log(filtered)
+    
+    filtered.forEach(x => {
+      message += `${x}: ${vm[x]} `
+    })
+
+    return message + " successfully."
   }
 
   GetController(str) {
@@ -120,7 +140,7 @@ export class UI {
   GetViewModelFromInputEvent(e) {
     e.path.forEach(x => {
       let ind = Object.keys(this._viewModels).indexOf(x.id)
-      if(ind !== -1) this._viewModel = this._viewModels[x.id]
+      if (ind !== -1) this._viewModel = this._viewModels[x.id]
     })
   }
 

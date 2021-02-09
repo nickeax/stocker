@@ -5,22 +5,27 @@ export class Account {
     this.accounts = []
     this.utils = ut
     this.dal = dal
-  }
 
+  }
+  
   Add(mem) {
     let val = false
     let memberValidity = this.ValidMember(mem)
     val = memberValidity.length
     
     if(!val) {
-      let tmpId = this.utils.GUID(utils.PATTERN)
+      let tmpId = this.utils.GUID(this.utils.PATTERN)
       this.accounts.push(new Member(tmpId, mem))
-      this.dal.AddMember(this.Get(tmpId))
+      this.dal.AddMember(this.GetLocal(tmpId))
     }
     return memberValidity
   }
 
   Get(id) {
+    return this.accounts.filter(x => x.ID == id)[0]
+  }
+
+  GetLocal(id) {
     return this.accounts.filter(x => x.ID == id)[0]
   }
 
