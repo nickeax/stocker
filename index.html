@@ -42,9 +42,8 @@
             <legend>Account Management</legend>
             <ul class="flex-outer">
               <li>
-                <label for="nName">
+                <label for="fName">
                   First Name
-                  <!-- <input id="fName" type="text" placeholder="first name" /> -->
                   <input id="fName" type="text" placeholder="first name" />
                 </label>
                 <br />
@@ -129,9 +128,11 @@
         <form action="#" id="orders-form">
           <fieldset id="order">
             <legend>Orders</legend>
-            <input id="description" type="text" placeholder="Item Description" />
+            <label for="notes">
+              <input id="notes" type="text" placeholder="Any relevant extra info." />
+            </label>
             <br />
-            <input id="cost" type="text" placeholder="Cost" />
+            <select id="memberName"></select>
           </fieldset>
         </form>
 
@@ -159,6 +160,18 @@
                   <input
                     id="description"
                     type="text"
+                    placeholder="description"
+                  />
+                </label>
+                <br />
+              </li>
+              <li>
+                <label for="unitCost">
+                  Unit Cost Dollars
+                  <input
+                    id="unitCost"
+                    type="number"
+                    step="0.5"
                     placeholder="description"
                   />
                 </label>

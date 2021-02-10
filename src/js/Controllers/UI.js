@@ -23,7 +23,7 @@ export class UI {
     this._viewModels['account'] = addMember
     this.utils = ut
     this._labelsRefs = []
-    this._exludeList = ['required', 'val', 'controller', 'action']
+    this._exludeList = ['required', 'val', 'controller', 'action', '_manager']
     this._controllers['account'] = acc
     this._controllers['stock'] = stk
     this._controllers['order'] = ord
@@ -89,7 +89,7 @@ export class UI {
               this.Popup('warning', `The following were incorrect: ${this.ResultsString(res)}`)
 
             } else {
-              this.Popup('success', this.ResultMessage(this._viewModel) + " added.")
+              this.Popup('success', this.ResultMessage(this._viewModel) + " successfully added.")
               this._viewModel.Reset()
               this.ClearForm(ev.target.id)
             }
@@ -124,36 +124,30 @@ export class UI {
 
   GetLabels() {
     this._rootElement.querySelectorAll('label').forEach(x => {
-      console.log(x.getAttribute('for'))
       this._labelsRefs.push({id: `${x.getAttribute('for')}`, text: `${x.innerText.trim()}`})
     })
-
-    console.log(this._labelsRefs)
   }
 
   ResultsString(r) {
     let text = []
-    console.log(r)
     r.forEach(x => {
-      console.log(x.field)
-      text.push(`${this._labelsRefs.find(y => y.id === x.field).text}`)
+      text.push(`<span class="errorItems">${this._labelsRefs.find(y => y.id === x.field).text}</span>`)
     })
     
-    console.log(text.join('-'))
     return text.join(', ') + "."
   }
 
   ResultMessage(vm) {
-    let message = "Added "
+    let message = "Parts "
 
     let filtered = Object.keys(vm).filter(x => this._exludeList.indexOf(x) === -1)
     console.log(filtered)
     
     filtered.forEach(x => {
-      message += `${x}: ${vm[x]} `
+      message += `<span class="successItems">${this._labelsRefs.find(y => y.id === x).text}: ${vm[x]}</span> `
     })
 
-    return message + " successfully."
+    return message
   }
 
   GetController(str) {
@@ -244,10 +238,10 @@ export class UI {
 
     setTimeout(() => {
       pu.classList.add("clear")
-    }, 2500);
+    }, 4500);
     document.getElementById("ui").appendChild(pu)
     setTimeout(() => {
       document.getElementById("ui").removeChild(pu)
-    }, 3500);
+    }, 5500);
   }
 }

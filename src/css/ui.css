@@ -137,9 +137,9 @@ ul {
   width: 100vw;
   height: 100vh;
   font-size: 2rem;
-  font-weight: 900;
+  font-weight: 400;
   background-color: rgba(255, 255, 255, 0.0);
-  transition: opacity 2s ease-in-out;
+  transition: opacity 5.5s ease-in-out;
 }
 
 .success, .warning, .error {
@@ -174,4 +174,9 @@ ul {
 /* ERROR MESSAGES */
 .fieldWarning::placeholder {
   color: red;
+}
+
+.errorItems, .successItems {
+  font-weight: 700;
+  color: rgb(53, 49, 26);
 }
