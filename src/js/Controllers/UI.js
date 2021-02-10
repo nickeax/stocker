@@ -22,6 +22,7 @@ export class UI {
     this._viewModels['stock'] = addStock
     this._viewModels['account'] = addMember
     this.utils = ut
+    this._labelsRefs = []
     this._exludeList = ['required', 'val', 'controller', 'action']
     this._controllers['account'] = acc
     this._controllers['stock'] = stk
@@ -45,6 +46,7 @@ export class UI {
     this.GetInputs("#order", "order")
     this.GetInputs("#report", "report")
     this.GetPages(document.querySelectorAll("li"))
+    this.GetLabels()
 
     this.SetAttributesMulti("input", "autocomplete", "no")
     // this.SetAttributesMulti("input", "required", "")
@@ -84,7 +86,7 @@ export class UI {
                 field.value = ""
                 field.placeholder = x.message
               })
-              this.Popup('warning', "Please check that all fields contain the correct information")
+              this.Popup('warning', `The following were incorrect: ${this.ResultsString(res)}`)
 
             } else {
               this.Popup('success', this.ResultMessage(this._viewModel) + " added.")
@@ -118,6 +120,27 @@ export class UI {
         this._viewModel[ev.target.id] = ev.target.value
         break;
     }
+  }
+
+  GetLabels() {
+    this._rootElement.querySelectorAll('label').forEach(x => {
+      console.log(x.getAttribute('for'))
+      this._labelsRefs.push({id: `${x.getAttribute('for')}`, text: `${x.innerText.trim()}`})
+    })
+
+    console.log(this._labelsRefs)
+  }
+
+  ResultsString(r) {
+    let text = []
+    console.log(r)
+    r.forEach(x => {
+      console.log(x.field)
+      text.push(`${this._labelsRefs.find(y => y.id === x.field).text}`)
+    })
+    
+    console.log(text.join('-'))
+    return text.join(', ') + "."
   }
 
   ResultMessage(vm) {
