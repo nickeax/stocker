@@ -19,4 +19,8 @@ export class Utils {
     })
     return tmpArr.join('-')
   }
+
+  RemoveChildren(nd) {
+    nd.innerText = ""
+  }
 }

@@ -102,7 +102,8 @@ export class UI {
 
         break;
 
-      case 'click': // Check for click event that references a form/page title
+      case 'click':
+        // Check for click event that references a form/page title
         if (this.pages.indexOf(ev.srcElement.id) !== -1) {
           document.querySelectorAll('fieldset').forEach(x => this.AffectElement(x, 'css', 'hide', true))
 
@@ -111,20 +112,68 @@ export class UI {
           if (ev.target.dataset.target) {
             this.AffectElement(tmpElement, "css", "show", true)
           }
-
         }
+
+        // Check for UI interaction requiring other actions
+        // Process data attributes
+        if (ev.target.dataset && ev.target.dataset.click) {
+          const evt = ev.target.dataset
+          let res = []
+
+          let controller = this.GetController(evt.click)
+          let action = this.GetAction(evt.click)
+
+          let vm = this._viewModels[controller]
+          vm.action = action
+          vm.controller = controller
+
+          res = this._controllers[controller][action](vm)
+
+          switch (ev.target.localName) {
+            case 'select':
+              if (ev.target.childNodes.length > 0) this.utils.RemoveChildren(ev.target)
+
+              let tmpOptionDefault = document.createElement('option')
+
+              tmpOptionDefault.textContent = ` - SELECT - `
+              tmpOptionDefault.setAttribute('value', "")
+              ev.target.appendChild(tmpOptionDefault)
+
+              res.sort((a, b) => {
+                if (a.fName < b.fName) return -1
+                return 1
+              }).forEach(x => {
+                  let tmpOption = document.createElement('option')
+                  tmpOption.textContent = `${x.fName} ${x.lName}`
+                  tmpOption.setAttribute('value', x.ID)
+                  ev.target.appendChild(tmpOption)
+                })
+
+              // Set the first Option to be selected by default
+              tmpOptionDefault.setAttribute('selected', true)
+
+              break
+          }
+        }
+
         break;
 
       case 'input':
+        // Populate viewmodel with data from input event
         this.GetViewModelFromInputEvent(ev)
+        if (!this._viewModel) {
+          this._viewModel = this._viewModels[this.GetController(ev.target.dataset.click)]
+        }
         this._viewModel[ev.target.id] = ev.target.value
+        console.log("Add Input Value: ", ev.target.id, ev.target.value)
+        console.table(this._viewModel)
         break;
     }
   }
 
   GetLabels() {
     this._rootElement.querySelectorAll('label').forEach(x => {
-      this._labelsRefs.push({id: `${x.getAttribute('for')}`, text: `${x.innerText.trim()}`})
+      this._labelsRefs.push({ id: `${x.getAttribute('for')}`, text: `${x.innerText.trim()}` })
     })
   }
 
@@ -133,7 +182,7 @@ export class UI {
     r.forEach(x => {
       text.push(`<span class="errorItems">${this._labelsRefs.find(y => y.id === x.field).text}</span>`)
     })
-    
+
     return text.join(', ') + "."
   }
 
@@ -142,7 +191,7 @@ export class UI {
 
     let filtered = Object.keys(vm).filter(x => this._exludeList.indexOf(x) === -1)
     console.log(filtered)
-    
+
     filtered.forEach(x => {
       message += `<span class="successItems">${this._labelsRefs.find(y => y.id === x).text}: ${vm[x]}</span> `
     })

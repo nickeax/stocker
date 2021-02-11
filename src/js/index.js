@@ -22,6 +22,6 @@ const ui = new UI(document.querySelector('#ui'),
   new Stock(UTILS, DL),
   new Order(UTILS, DL))
 
-const defaultElement = document.querySelector('#stock')
+const defaultElement = document.querySelector('#order')
 
 ui.Init(defaultElement)

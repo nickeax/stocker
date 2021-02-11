@@ -20,7 +20,6 @@ export class DAL {
   }
   
   GetItems(VM) {
-    console.log("VM: ", VM)
     let deseriObjects = []
     for(let i = 0; i < localStorage.length; i++) {
       let key = localStorage.key(i)

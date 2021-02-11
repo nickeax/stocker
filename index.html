@@ -125,17 +125,34 @@
           </fieldset>
         </form>
 
+        <!-- ORDERS -->
         <form action="#" id="orders-form">
           <fieldset id="order">
             <legend>Orders</legend>
-            <label for="notes">
-              <input id="notes" type="text" placeholder="Any relevant extra info." />
-            </label>
-            <br />
-            <select id="memberName"></select>
+            <ul>
+              <li>
+                <label for="memberName">Member
+                  <select id="memberName" data-click="account-GetAll"></select>                  
+                </label>
+              </li>
+              <li>
+                <label for="itemName">Item
+                  <select id="itemName" data-click="stock-GetAll"></select>                  
+                </label>
+              </li>
+              <li>
+                <label for="notes">Notes
+                  <input id="notes" type="text" placeholder="Any relevant extra info." />
+                </label>
+              </li>
+              <li><label for="order-Add">
+                <button type="submit" id="order-Add">Place Order</button>
+              </label></li>
+            </ul>
           </fieldset>
         </form>
 
+        <!-- STOCK -->
         <form id="stock-form" action="#">
           <fieldset id="stock">
             <legend>Stock Management</legend>
